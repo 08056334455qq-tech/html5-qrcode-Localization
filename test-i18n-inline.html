@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON i18n インラインテスト - Codespaces対応</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .test-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .test-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        select {
+            padding: 12px 20px;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            background: white;
+        }
+        
+        .output {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            min-height: 100px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        
+        .result {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        
+        .error {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        
+        .info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+        }
+        
+        tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .json-display {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌍 JSON i18n インラインテスト</h1>
+            <p>GitHub Codespaces対応 - サーバー不要</p>
+        </div>
+
+        <div class="content">
+            <div class="info">
+                ℹ️ このページは全てのJSONを埋め込んでいるため、サーバーなしで動作します。<br>
+                VS Codeで直接このファイルを開いて、ライブプレビューで確認できます。
+            </div>
+
+            <div class="test-section">
+                <h2>🧪 基本テスト</h2>
+                <div class="controls">
+                    <select id="locale-selector">
+                        <option value="en">English 🇬🇧</option>
+                        <option value="ja">日本語 🇯🇵</option>
+                    </select>
+                    <button onclick="testBasicTranslation()">翻訳をテスト</button>
+                    <button onclick="testWithParams()">パラメータ付きテスト</button>
+                    <button onclick="testAutoDetect()">自動検出テスト</button>
+                </div>
+                <div id="basic-output" class="output">結果がここに表示されます...</div>
+            </div>
+
+            <div class="test-section">
+                <h2>📊 全翻訳キーのテスト</h2>
+                <button onclick="testAllKeys()">全てのキーをテスト</button>
+                <div id="all-keys-output" class="output"></div>
+            </div>
+
+            <div class="test-section">
+                <h2>🔍 JSON構造の確認</h2>
+                <div class="controls">
+                    <button onclick="showEnglishJSON()">英語JSONを表示</button>
+                    <button onclick="showJapaneseJSON()">日本語JSONを表示</button>
+                    <button onclick="compareJSONs()">構造を比較</button>
+                </div>
+                <div id="json-output" class="json-display"></div>
+            </div>
+
+            <div class="test-section">
+                <h2>✅ バリデーションテスト</h2>
+                <button onclick="validateTranslations()">翻訳をバリデート</button>
+                <div id="validation-output" class="output"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 英語翻訳（en.jsonから埋め込み）
+        const enTranslations = {
+            "html5Qrcode": {
+                "codeParseError": "QR code parse error, error = {error}",
+                "errorGettingUserMedia": "Error getting userMedia, error = {error}",
+                "onlyDeviceSupportedError": "The device doesn't support navigator.mediaDevices, only supported cameraIdOrConfig in this case is deviceId parameter (string).",
+                "cameraStreamingNotSupported": "Camera streaming not supported by the browser.",
+                "unableToQuerySupportedDevices": "Unable to query supported devices, unknown error.",
+                "insecureContextCameraQueryError": "Camera access is only supported in secure context like https or localhost.",
+                "scannerPaused": "Scanner paused"
+            },
+            "html5QrcodeScanner": {
+                "scanningStatus": "Scanning",
+                "idleStatus": "Idle",
+                "errorStatus": "Error",
+                "permissionStatus": "Permission",
+                "noCameraFoundErrorStatus": "No Cameras",
+                "lastMatch": "Last Match: {decodedText}",
+                "codeScannerTitle": "Code Scanner",
+                "cameraPermissionTitle": "Request Camera Permissions",
+                "cameraPermissionRequesting": "Requesting camera permissions...",
+                "noCameraFound": "No camera found",
+                "scanButtonStopScanningText": "Stop Scanning",
+                "scanButtonStartScanningText": "Start Scanning",
+                "torchOnButton": "Switch On Torch",
+                "torchOffButton": "Switch Off Torch",
+                "torchOnFailedMessage": "Failed to turn on torch",
+                "torchOffFailedMessage": "Failed to turn off torch",
+                "scanButtonScanningStarting": "Launching Camera...",
+                "textIfCameraScanSelected": "Scan an Image File",
+                "textIfFileScanSelected": "Scan using camera directly",
+                "selectCamera": "Select Camera",
+                "fileSelectionChooseImage": "Choose Image",
+                "fileSelectionChooseAnother": "Choose Another",
+                "fileSelectionNoImageSelected": "No image chosen",
+                "anonymousCameraPrefix": "Anonymous Camera",
+                "dragAndDropMessage": "Or drop an image to scan",
+                "dragAndDropMessageOnlyImages": "Or drop an image to scan (other files not supported)",
+                "zoom": "zoom",
+                "loadingImage": "Loading image...",
+                "cameraScanAltText": "Camera based scan",
+                "fileScanAltText": "File based scan"
+            },
+            "libraryInfo": {
+                "poweredBy": "Powered by ",
+                "reportIssues": "Report issues"
+            }
+        };
+
+        // 日本語翻訳（ja.jsonから埋め込み）
+        const jaTranslations = {
+            "html5Qrcode": {
+                "codeParseError": "QRコードの解析エラー、エラー = {error}",
+                "errorGettingUserMedia": "userMediaの取得エラー、エラー = {error}",
+                "onlyDeviceSupportedError": "このデバイスはnavigator.mediaDevicesをサポートしていません。この場合、サポートされているcameraIdOrConfigはdeviceIdパラメータ（文字列）のみです。",
+                "cameraStreamingNotSupported": "ブラウザがカメラストリーミングをサポートしていません。",
+                "unableToQuerySupportedDevices": "サポートされているデバイスを照会できません、不明なエラー。",
+                "insecureContextCameraQueryError": "カメラアクセスは、httpsまたはlocalhostのような安全なコンテキストでのみサポートされています。",
+                "scannerPaused": "スキャナーが一時停止しました"
+            },
+            "html5QrcodeScanner": {
+                "scanningStatus": "スキャン中",
+                "idleStatus": "待機中",
+                "errorStatus": "エラー",
+                "permissionStatus": "許可",
+                "noCameraFoundErrorStatus": "カメラなし",
+                "lastMatch": "最後のマッチ: {decodedText}",
+                "codeScannerTitle": "コードスキャナー",
+                "cameraPermissionTitle": "カメラの許可をリクエスト",
+                "cameraPermissionRequesting": "カメラの許可をリクエスト中...",
+                "noCameraFound": "カメラが見つかりません",
+                "scanButtonStopScanningText": "スキャンを停止",
+                "scanButtonStartScanningText": "スキャンを開始",
+                "torchOnButton": "ライトをオン",
+                "torchOffButton": "ライトをオフ",
+                "torchOnFailedMessage": "ライトのオンに失敗しました",
+                "torchOffFailedMessage": "ライトのオフに失敗しました",
+                "scanButtonScanningStarting": "カメラを起動中...",
+                "textIfCameraScanSelected": "画像ファイルをスキャン",
+                "textIfFileScanSelected": "カメラを直接使用してスキャン",
+                "selectCamera": "カメラを選択",
+                "fileSelectionChooseImage": "画像を選択",
+                "fileSelectionChooseAnother": "別の画像を選択",
+                "fileSelectionNoImageSelected": "画像が選択されていません",
+                "anonymousCameraPrefix": "匿名カメラ",
+                "dragAndDropMessage": "または画像をドロップしてスキャン",
+                "dragAndDropMessageOnlyImages": "または画像をドロップしてスキャン（その他のファイルはサポートされていません）",
+                "zoom": "ズーム",
+                "loadingImage": "画像を読み込み中...",
+                "cameraScanAltText": "カメラベースのスキャン",
+                "fileScanAltText": "ファイルベースのスキャン"
+            },
+            "libraryInfo": {
+                "poweredBy": "提供: ",
+                "reportIssues": "問題を報告"
+            }
+        };
+
+        // 簡易i18nマネージャー
+        let currentTranslations = enTranslations;
+
+        function setLocale(locale) {
+            currentTranslations = locale === 'ja' ? jaTranslations : enTranslations;
+            return currentTranslations;
+        }
+
+        function translate(key, params = {}) {
+            const keys = key.split('.');
+            let value = currentTranslations;
+            
+            for (const k of keys) {
+                if (value && typeof value === 'object' && k in value) {
+                    value = value[k];
+                } else {
+                    return `[Missing: ${key}]`;
+                }
+            }
+            
+            if (typeof value !== 'string') {
+                return `[Not a string: ${key}]`;
+            }
+            
+            // パラメータ置換
+            return value.replace(/\{(\w+)\}/g, (match, param) => {
+                return params.hasOwnProperty(param) ? params[param] : match;
+            });
+        }
+
+        // テスト関数
+        function testBasicTranslation() {
+            const locale = document.getElementById('locale-selector').value;
+            setLocale(locale);
+            
+            const output = document.getElementById('basic-output');
+            output.innerHTML = `
+<span style="color: #4caf50">✅ ロケール設定: ${locale}</span>
+
+テスト結果:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. スキャンステータス:
+   ${translate('html5QrcodeScanner.scanningStatus')}
+
+2. アイドルステータス:
+   ${translate('html5QrcodeScanner.idleStatus')}
+
+3. ボタンテキスト:
+   - 開始: ${translate('html5QrcodeScanner.scanButtonStartScanningText')}
+   - 停止: ${translate('html5QrcodeScanner.scanButtonStopScanningText')}
+
+4. スキャナータイトル:
+   ${translate('html5QrcodeScanner.codeScannerTitle')}
+
+5. カメラ選択:
+   ${translate('html5QrcodeScanner.selectCamera')}
+            `;
+        }
+
+        function testWithParams() {
+            const locale = document.getElementById('locale-selector').value;
+            setLocale(locale);
+            
+            const output = document.getElementById('basic-output');
+            output.innerHTML = `
+<span style="color: #4caf50">✅ パラメータ付き翻訳テスト</span>
+
+1. エラーメッセージ:
+   ${translate('html5Qrcode.codeParseError', { error: '無効な形式' })}
+
+2. 最後のマッチ:
+   ${translate('html5QrcodeScanner.lastMatch', { decodedText: 'https://example.com' })}
+
+3. userMediaエラー:
+   ${translate('html5Qrcode.errorGettingUserMedia', { error: 'Permission denied' })}
+            `;
+        }
+
+        function testAutoDetect() {
+            const browserLang = navigator.language || navigator.userLanguage;
+            const langCode = browserLang.split('-')[0];
+            const detected = langCode === 'ja' ? 'ja' : 'en';
+            
+            setLocale(detected);
+            document.getElementById('locale-selector').value = detected;
+            
+            const output = document.getElementById('basic-output');
+            output.innerHTML = `
+<span style="color: #4caf50">✅ 自動検出テスト</span>
+
+ブラウザ言語: ${browserLang}
+検出されたロケール: ${detected}
+
+テスト翻訳:
+${translate('html5QrcodeScanner.scanningStatus')}
+${translate('html5QrcodeScanner.codeScannerTitle')}
+            `;
+        }
+
+        function testAllKeys() {
+            const locale = document.getElementById('locale-selector').value;
+            setLocale(locale);
+            
+            const output = document.getElementById('all-keys-output');
+            let result = `<span style="color: #4caf50">✅ 全キーテスト (${locale})</span>\n\n`;
+            
+            const allKeys = [
+                'html5Qrcode.codeParseError',
+                'html5Qrcode.scannerPaused',
+                'html5QrcodeScanner.scanningStatus',
+                'html5QrcodeScanner.idleStatus',
+                'html5QrcodeScanner.errorStatus',
+                'html5QrcodeScanner.scanButtonStartScanningText',
+                'html5QrcodeScanner.scanButtonStopScanningText',
+                'html5QrcodeScanner.codeScannerTitle',
+                'libraryInfo.poweredBy',
+                'libraryInfo.reportIssues'
+            ];
+            
+            allKeys.forEach(key => {
+                const value = translate(key);
+                result += `${key}:\n  → ${value}\n\n`;
+            });
+            
+            output.innerHTML = result;
+        }
+
+        function showEnglishJSON() {
+            const output = document.getElementById('json-output');
+            output.textContent = JSON.stringify(enTranslations, null, 2);
+        }
+
+        function showJapaneseJSON() {
+            const output = document.getElementById('json-output');
+            output.textContent = JSON.stringify(jaTranslations, null, 2);
+        }
+
+        function compareJSONs() {
+            const output = document.getElementById('json-output');
+            
+            function getKeys(obj, prefix = '') {
+                let keys = [];
+                for (const key in obj) {
+                    const fullKey = prefix ? `${prefix}.${key}` : key;
+                    if (typeof obj[key] === 'object') {
+                        keys = keys.concat(getKeys(obj[key], fullKey));
+                    } else {
+                        keys.push(fullKey);
+                    }
+                }
+                return keys;
+            }
+            
+            const enKeys = getKeys(enTranslations).sort();
+            const jaKeys = getKeys(jaTranslations).sort();
+            
+            const missing = enKeys.filter(k => !jaKeys.includes(k));
+            const extra = jaKeys.filter(k => !enKeys.includes(k));
+            
+            let result = '構造比較結果:\n\n';
+            result += `英語キー数: ${enKeys.length}\n`;
+            result += `日本語キー数: ${jaKeys.length}\n\n`;
+            
+            if (missing.length === 0 && extra.length === 0) {
+                result += '✅ 完全一致！両方のJSONは同じ構造です。\n';
+            } else {
+                if (missing.length > 0) {
+                    result += `❌ 日本語に欠けているキー:\n${missing.join('\n')}\n\n`;
+                }
+                if (extra.length > 0) {
+                    result += `⚠️ 日本語の余分なキー:\n${extra.join('\n')}\n`;
+                }
+            }
+            
+            output.textContent = result;
+        }
+
+        function validateTranslations() {
+            const output = document.getElementById('validation-output');
+            let result = '<span style="color: #4caf50">🔍 バリデーション実行中...</span>\n\n';
+            
+            const requiredSections = ['html5Qrcode', 'html5QrcodeScanner', 'libraryInfo'];
+            const errors = [];
+            const warnings = [];
+            
+            // 英語のバリデーション
+            for (const section of requiredSections) {
+                if (!enTranslations[section]) {
+                    errors.push(`英語: セクション "${section}" が見つかりません`);
+                }
+                if (!jaTranslations[section]) {
+                    errors.push(`日本語: セクション "${section}" が見つかりません`);
+                }
+            }
+            
+            // プレースホルダーのチェック
+            function checkPlaceholders(obj1, obj2, path = '') {
+                for (const key in obj1) {
+                    const fullPath = path ? `${path}.${key}` : key;
+                    if (typeof obj1[key] === 'object') {
+                        checkPlaceholders(obj1[key], obj2[key], fullPath);
+                    } else if (typeof obj1[key] === 'string') {
+                        const enMatches = (obj1[key].match(/\{(\w+)\}/g) || []).sort();
+                        const jaMatches = (obj2[key].match(/\{(\w+)\}/g) || []).sort();
+                        
+                        if (enMatches.length !== jaMatches.length || 
+                            enMatches.some((m, i) => m !== jaMatches[i])) {
+                            warnings.push(
+                                `プレースホルダー不一致: ${fullPath}\n` +
+                                `  英語: ${enMatches.join(', ') || 'なし'}\n` +
+                                `  日本語: ${jaMatches.join(', ') || 'なし'}`
+                            );
+                        }
+                    }
+                }
+            }
+            
+            checkPlaceholders(enTranslations, jaTranslations);
+            
+            // 結果表示
+            if (errors.length === 0 && warnings.length === 0) {
+                result += '<span style="color: #4caf50">✅ バリデーション成功！</span>\n\n';
+                result += '- 全ての必須セクションが存在します\n';
+                result += '- プレースホルダーが正しく対応しています\n';
+                result += '- 翻訳ファイルは正常です\n';
+            } else {
+                if (errors.length > 0) {
+                    result += '<span style="color: #f44336">❌ エラー:</span>\n';
+                    result += errors.join('\n') + '\n\n';
+                }
+                if (warnings.length > 0) {
+                    result += '<span style="color: #ff9800">⚠️ 警告:</span>\n';
+                    result += warnings.join('\n\n') + '\n';
+                }
+            }
+            
+            output.innerHTML = result;
+        }
+
+        // 初期化
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('✅ JSON i18n テストページが読み込まれました');
+            console.log('英語翻訳キー数:', Object.keys(enTranslations).length);
+            console.log('日本語翻訳キー数:', Object.keys(jaTranslations).length);
+        });
+    </script>
+</body>
+</html>

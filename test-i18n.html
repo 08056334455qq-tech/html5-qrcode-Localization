@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON i18n クイックテスト</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        .button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        .test-area {
+            border: 2px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .success {
+            color: #4caf50;
+            font-weight: bold;
+        }
+        .error {
+            color: #f44336;
+            font-weight: bold;
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-left: 4px solid #2196F3;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .step {
+            background: #fff3e0;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-left: 4px solid #ff9800;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #667eea;
+            color: white;
+        }
+        tr:hover {
+            background: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌍 JSON i18n システム クイックテストガイド</h1>
+        <p>html5-qrcodeのJSON多言語化システムをテストする方法</p>
+    </div>
+
+    <div class="section">
+        <h2>📋 事前準備</h2>
+        <div class="step">
+            <strong>ステップ 1:</strong> 依存関係をインストール
+            <div class="code-block">npm install</div>
+        </div>
+        <div class="step">
+            <strong>ステップ 2:</strong> プロジェクトをビルド
+            <div class="code-block">npm run build</div>
+        </div>
+        <div class="info">
+            💡 <strong>注意:</strong> TypeScriptがJSONファイルをインポートできない場合は、
+            <code>tsconfig.json</code>に<code>"resolveJsonModule": true</code>を追加してください。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🚀 テスト方法</h2>
+        
+        <h3>方法1: テストサーバーを使用（推奨）</h3>
+        <div class="step">
+            <strong>Linux/Mac:</strong>
+            <div class="code-block">chmod +x start-test-server.sh<br>./start-test-server.sh</div>
+        </div>
+        <div class="step">
+            <strong>Windows/その他:</strong>
+            <div class="code-block">python -m http.server 8000</div>
+        </div>
+        <div class="step">
+            ブラウザで開く:
+            <div class="code-block">http://localhost:8000/examples/html5/i18n-json-demo.html</div>
+            <a href="examples/html5/i18n-json-demo.html" class="button" target="_blank">デモを開く</a>
+        </div>
+
+        <h3>方法2: HTMLファイルを直接開く</h3>
+        <div class="info">
+            ⚠️ <strong>警告:</strong> <code>file://</code>プロトコルではJSONファイルの読み込みが
+            CORSエラーにより失敗する可能性があります。テストサーバーの使用を推奨します。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🧪 テストシナリオ</h2>
+        
+        <h3>1. 基本的な言語切り替え</h3>
+        <table>
+            <tr>
+                <th>アクション</th>
+                <th>期待される結果</th>
+            </tr>
+            <tr>
+                <td>言語セレクターで「English」を選択</td>
+                <td>UI全体が英語で表示される</td>
+            </tr>
+            <tr>
+                <td>言語セレクターで「日本語」を選択</td>
+                <td>UI全体が日本語で表示される</td>
+            </tr>
+        </table>
+
+        <h3>2. カスタムJSONの読み込み</h3>
+        <div class="step">
+            <strong>スペイン語のサンプルJSON</strong>を作成:
+            <div class="code-block">
+{<br>
+&nbsp;&nbsp;"html5Qrcode": {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"scannerPaused": "Escáner pausado"<br>
+&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;"html5QrcodeScanner": {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"scanningStatus": "Escaneando",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"scanButtonStartScanningText": "Iniciar Escaneo"<br>
+&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;"libraryInfo": {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"poweredBy": "Desarrollado por "<br>
+&nbsp;&nbsp;}<br>
+}
+            </div>
+        </div>
+        <div class="step">
+            ファイルを保存: <code>examples/html5/locales/es.json</code>
+        </div>
+        <div class="step">
+            デモページで「Or enter custom JSON URL」に入力:
+            <div class="code-block">locales/es.json</div>
+            「Load」ボタンをクリック
+        </div>
+
+        <h3>3. プログラムでのテスト</h3>
+        <div class="code-block">
+// TypeScriptファイルを作成: test-i18n.ts<br>
+import { I18nManager, SupportedLocales } from './src/i18n';<br>
+<br>
+// 日本語に設定<br>
+I18nManager.setLocale(SupportedLocales.JA);<br>
+<br>
+// 翻訳を取得<br>
+const status = I18nManager.translate('html5QrcodeScanner.scanningStatus');<br>
+console.log(status); // "スキャン中"<br>
+<br>
+// パラメータ付き<br>
+const error = I18nManager.translate('html5Qrcode.codeParseError', {<br>
+&nbsp;&nbsp;error: 'テストエラー'<br>
+});<br>
+console.log(error); // "QRコードの解析エラー、エラー = テストエラー"
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>📝 JSONファイルの場所</h2>
+        <table>
+            <tr>
+                <th>ファイル</th>
+                <th>説明</th>
+            </tr>
+            <tr>
+                <td><code>src/i18n/locales/en.json</code></td>
+                <td>英語翻訳（デフォルト）</td>
+            </tr>
+            <tr>
+                <td><code>src/i18n/locales/ja.json</code></td>
+                <td>日本語翻訳</td>
+            </tr>
+            <tr>
+                <td><code>src/i18n/locales/template.json</code></td>
+                <td>新しい言語用のテンプレート</td>
+            </tr>
+            <tr>
+                <td><code>src/i18n/locales/translation-schema.json</code></td>
+                <td>JSONスキーマ（バリデーション用）</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>🔍 動作確認ポイント</h2>
+        <div class="test-area">
+            <h3>✅ チェックリスト</h3>
+            <label><input type="checkbox"> 言語セレクターで英語/日本語が切り替えられる</label><br>
+            <label><input type="checkbox"> ボタンのテキストが選択した言語で表示される</label><br>
+            <label><input type="checkbox"> ステータスメッセージが選択した言語で表示される</label><br>
+            <label><input type="checkbox"> カスタムJSONをURLから読み込める</label><br>
+            <label><input type="checkbox"> バリデーションエラーが適切に表示される</label><br>
+            <label><input type="checkbox"> ブラウザ言語の自動検出が機能する</label><br>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🐛 トラブルシューティング</h2>
+        
+        <h3>問題1: "Cannot find module" エラー</h3>
+        <div class="info">
+            <strong>原因:</strong> TypeScriptがJSONファイルをインポートできない<br>
+            <strong>解決:</strong> <code>tsconfig.json</code>に以下を追加:
+            <div class="code-block">
+"compilerOptions": {<br>
+&nbsp;&nbsp;"resolveJsonModule": true,<br>
+&nbsp;&nbsp;"esModuleInterop": true<br>
+}
+            </div>
+        </div>
+
+        <h3>問題2: CORSエラー</h3>
+        <div class="info">
+            <strong>原因:</strong> ローカルファイルシステムから直接開いている<br>
+            <strong>解決:</strong> テストサーバーを使用する（上記の方法1参照）
+        </div>
+
+        <h3>問題3: 翻訳が読み込まれない</h3>
+        <div class="info">
+            <strong>確認事項:</strong><br>
+            1. JSONファイルの構文が正しいか確認<br>
+            2. 必須フィールドがすべて存在するか確認<br>
+            3. ブラウザのコンソールでエラーを確認<br>
+            4. <code>I18nManager.getLocale()</code>で現在のロケールを確認
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🎯 次のステップ</h2>
+        <div class="step">
+            <strong>1. 新しい言語を追加してみる</strong>
+            <ul>
+                <li><code>template.json</code>をコピーして新しいファイルを作成</li>
+                <li>翻訳を記入</li>
+                <li>カスタムJSONとして読み込んでテスト</li>
+            </ul>
+        </div>
+        <div class="step">
+            <strong>2. プロジェクトに統合</strong>
+            <ul>
+                <li>自分のアプリケーションで<code>I18nManager</code>を使用</li>
+                <li>必要に応じて翻訳をカスタマイズ</li>
+                <li>ユーザーの言語設定に基づいて自動切り替え</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>📚 関連ドキュメント</h2>
+        <a href="../../I18N-JSON.md" class="button">JSON i18nガイド（英語）</a>
+        <a href="../../i18n-json-README-ja.md" class="button">クイックガイド（日本語）</a>
+        <a href="../../I18N.md" class="button">一般的なi18nガイド</a>
+    </div>
+
+    <script>
+        // ページ読み込み時にチェック
+        window.addEventListener('DOMContentLoaded', function() {
+            // JSONファイルの存在確認
+            const files = [
+                'src/i18n/locales/en.json',
+                'src/i18n/locales/ja.json'
+            ];
+            
+            console.log('🔍 Checking JSON files...');
+            files.forEach(file => {
+                fetch(file)
+                    .then(response => {
+                        if (response.ok) {
+                            console.log(`✅ ${file} - OK`);
+                        } else {
+                            console.error(`❌ ${file} - Not found`);
+                        }
+                    })
+                    .catch(error => {
+                        console.error(`❌ ${file} - Error: ${error.message}`);
+                    });
+            });
+        });
+    </script>
+</body>
+</html>
