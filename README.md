@@ -26,6 +26,8 @@ Use this lightweight library to easily / quickly integrate QR code, bar code, an
 
 -   🔦 Supports customisations like [flash/torch support](#showtorchbuttonifsupported---boolean--undefined), zooming etc.
 
+-   🌍 **NEW: Internationalization (i18n) support** - Display UI in multiple languages. [See i18n documentation](./I18N.md)
+
 
 Supports two kinds of APIs
 
@@ -58,6 +60,8 @@ The documentation for this project has been moved to [scanapp.org/html5-qrcode-d
 -   [Supported frameworks](https://scanapp.org/html5-qrcode-docs/docs/supported_frameworks)
 -   [Supported 1D and 2D Code formats](https://scanapp.org/html5-qrcode-docs/docs/supported_code_formats)
 -   [Detailed API documentation](https://scanapp.org/html5-qrcode-docs/docs/apis)
+-   [**Internationalization (i18n) Guide**](./I18N.md)
+-   [**JSON-Based i18n Guide (Recommended)**](./I18N-JSON.md)
 
 ## Supported platforms
 

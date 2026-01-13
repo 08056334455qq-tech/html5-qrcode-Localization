@@ -8,118 +8,117 @@
  * http://www.denso-wave.com/qrcode/faqpatent-e.html
  */
 
+import { I18nManager } from "./i18n";
+
 /**
  * Strings used in {@class Html5Qrcode}.
  * 
- * TODO(mebjas): Support internalization.
+ * Now supports internationalization via I18nManager.
  */
 export class Html5QrcodeStrings {
 
     public static codeParseError(exception: any): string {
-        return `QR code parse error, error = ${exception}`;
+        return I18nManager.translate('html5Qrcode.codeParseError', { error: exception });
     }
 
     public static errorGettingUserMedia(error: any): string {
-        return `Error getting userMedia, error = ${error}`;
+        return I18nManager.translate('html5Qrcode.errorGettingUserMedia', { error: error });
     }
 
     public static onlyDeviceSupportedError(): string {
-        return "The device doesn't support navigator.mediaDevices , only "
-        + "supported cameraIdOrConfig in this case is deviceId parameter "
-        + "(string).";
+        return I18nManager.translate('html5Qrcode.onlyDeviceSupportedError');
     }
 
     public static cameraStreamingNotSupported(): string {
-        return "Camera streaming not supported by the browser.";
+        return I18nManager.translate('html5Qrcode.cameraStreamingNotSupported');
     }
 
     public static unableToQuerySupportedDevices(): string {
-        return "Unable to query supported devices, unknown error.";
+        return I18nManager.translate('html5Qrcode.unableToQuerySupportedDevices');
     }
 
     public static insecureContextCameraQueryError(): string {
-        return "Camera access is only supported in secure context like https "
-        + "or localhost.";
+        return I18nManager.translate('html5Qrcode.insecureContextCameraQueryError');
     }
 
     public static scannerPaused(): string {
-        return "Scanner paused";
+        return I18nManager.translate('html5Qrcode.scannerPaused');
     }
 }
 
 /**
  * Strings used in {@class Html5QrcodeScanner}.
  * 
- * TODO(mebjas): Support internalization.
+ * Now supports internationalization via I18nManager.
  */
 export class Html5QrcodeScannerStrings {
 
     public static scanningStatus(): string {
-        return "Scanning";
+        return I18nManager.translate('html5QrcodeScanner.scanningStatus');
     }
 
     public static idleStatus(): string {
-        return "Idle";
+        return I18nManager.translate('html5QrcodeScanner.idleStatus');
     }
 
     public static errorStatus(): string {
-        return "Error";
+        return I18nManager.translate('html5QrcodeScanner.errorStatus');
     }
 
     public static permissionStatus(): string {
-        return "Permission";
+        return I18nManager.translate('html5QrcodeScanner.permissionStatus');
     }
 
     public static noCameraFoundErrorStatus(): string {
-        return "No Cameras";
+        return I18nManager.translate('html5QrcodeScanner.noCameraFoundErrorStatus');
     }
 
     public static lastMatch(decodedText: string): string {
-        return `Last Match: ${decodedText}`;
+        return I18nManager.translate('html5QrcodeScanner.lastMatch', { decodedText: decodedText });
     }
 
     public static codeScannerTitle(): string {
-        return "Code Scanner";
+        return I18nManager.translate('html5QrcodeScanner.codeScannerTitle');
     }
 
     public static cameraPermissionTitle(): string {
-        return "Request Camera Permissions";
+        return I18nManager.translate('html5QrcodeScanner.cameraPermissionTitle');
     }
 
     public static cameraPermissionRequesting(): string {
-        return "Requesting camera permissions...";
+        return I18nManager.translate('html5QrcodeScanner.cameraPermissionRequesting');
     }
 
     public static noCameraFound(): string {
-        return "No camera found";
+        return I18nManager.translate('html5QrcodeScanner.noCameraFound');
     }
 
     public static scanButtonStopScanningText(): string {
-        return "Stop Scanning";
+        return I18nManager.translate('html5QrcodeScanner.scanButtonStopScanningText');
     }
 
     public static scanButtonStartScanningText(): string {
-        return "Start Scanning";
+        return I18nManager.translate('html5QrcodeScanner.scanButtonStartScanningText');
     }
 
     public static torchOnButton(): string {
-        return "Switch On Torch";
+        return I18nManager.translate('html5QrcodeScanner.torchOnButton');
     }
 
     public static torchOffButton(): string {
-        return "Switch Off Torch";
+        return I18nManager.translate('html5QrcodeScanner.torchOffButton');
     }
 
     public static torchOnFailedMessage(): string {
-        return "Failed to turn on torch";
+        return I18nManager.translate('html5QrcodeScanner.torchOnFailedMessage');
     }
 
     public static torchOffFailedMessage(): string {
-        return "Failed to turn off torch";
+        return I18nManager.translate('html5QrcodeScanner.torchOffFailedMessage');
     }
 
     public static scanButtonScanningStarting(): string {
-        return "Launching Camera...";
+        return I18nManager.translate('html5QrcodeScanner.scanButtonScanningStarting');
     }
 
     /**
@@ -128,7 +127,7 @@ export class Html5QrcodeScannerStrings {
      * This will be used to switch to file based scanning.
      */
     public static textIfCameraScanSelected(): string {
-        return "Scan an Image File";
+        return I18nManager.translate('html5QrcodeScanner.textIfCameraScanSelected');
     }
 
     /**
@@ -137,53 +136,53 @@ export class Html5QrcodeScannerStrings {
      * This will be used to switch to camera based scanning.
      */
     public static textIfFileScanSelected(): string {
-        return "Scan using camera directly";
+        return I18nManager.translate('html5QrcodeScanner.textIfFileScanSelected');
     }
 
     public static selectCamera(): string {
-        return "Select Camera";
+        return I18nManager.translate('html5QrcodeScanner.selectCamera');
     }
 
     public static fileSelectionChooseImage(): string {
-        return "Choose Image";
+        return I18nManager.translate('html5QrcodeScanner.fileSelectionChooseImage');
     }
 
     public static fileSelectionChooseAnother(): string {
-        return "Choose Another";
+        return I18nManager.translate('html5QrcodeScanner.fileSelectionChooseAnother');
     }
 
     public static fileSelectionNoImageSelected(): string {
-        return "No image choosen";
+        return I18nManager.translate('html5QrcodeScanner.fileSelectionNoImageSelected');
     }
 
     /** Prefix to be given to anonymous cameras. */
     public static anonymousCameraPrefix(): string {
-        return "Anonymous Camera";
+        return I18nManager.translate('html5QrcodeScanner.anonymousCameraPrefix');
     }
 
     public static dragAndDropMessage(): string {
-        return "Or drop an image to scan";
+        return I18nManager.translate('html5QrcodeScanner.dragAndDropMessage');
     }
 
     public static dragAndDropMessageOnlyImages(): string {
-        return "Or drop an image to scan (other files not supported)";
+        return I18nManager.translate('html5QrcodeScanner.dragAndDropMessageOnlyImages');
     }
 
     /** Value for zoom. */
     public static zoom(): string {
-        return "zoom";
+        return I18nManager.translate('html5QrcodeScanner.zoom');
     }
 
     public static loadingImage(): string {
-        return "Loading image...";
+        return I18nManager.translate('html5QrcodeScanner.loadingImage');
     }
 
     public static cameraScanAltText(): string {
-        return "Camera based scan";
+        return I18nManager.translate('html5QrcodeScanner.cameraScanAltText');
     }
 
     public static fileScanAltText(): string {
-        return "Fule based scan";
+        return I18nManager.translate('html5QrcodeScanner.fileScanAltText');
     }
 }
 
@@ -191,10 +190,10 @@ export class Html5QrcodeScannerStrings {
 export class LibraryInfoStrings {
 
     public static poweredBy(): string {
-        return "Powered by ";
+        return I18nManager.translate('libraryInfo.poweredBy');
     }
 
     public static reportIssues(): string {
-        return "Report issues";
+        return I18nManager.translate('libraryInfo.reportIssues');
     }
 }

@@ -1,0 +1,47 @@
+{
+  "html5Qrcode": {
+    "codeParseError": "[Your translation here] {error}",
+    "errorGettingUserMedia": "[Your translation here] {error}",
+    "onlyDeviceSupportedError": "[Your translation here]",
+    "cameraStreamingNotSupported": "[Your translation here]",
+    "unableToQuerySupportedDevices": "[Your translation here]",
+    "insecureContextCameraQueryError": "[Your translation here]",
+    "scannerPaused": "[Your translation here]"
+  },
+  "html5QrcodeScanner": {
+    "scanningStatus": "[Your translation here]",
+    "idleStatus": "[Your translation here]",
+    "errorStatus": "[Your translation here]",
+    "permissionStatus": "[Your translation here]",
+    "noCameraFoundErrorStatus": "[Your translation here]",
+    "lastMatch": "[Your translation here] {decodedText}",
+    "codeScannerTitle": "[Your translation here]",
+    "cameraPermissionTitle": "[Your translation here]",
+    "cameraPermissionRequesting": "[Your translation here]",
+    "noCameraFound": "[Your translation here]",
+    "scanButtonStopScanningText": "[Your translation here]",
+    "scanButtonStartScanningText": "[Your translation here]",
+    "torchOnButton": "[Your translation here]",
+    "torchOffButton": "[Your translation here]",
+    "torchOnFailedMessage": "[Your translation here]",
+    "torchOffFailedMessage": "[Your translation here]",
+    "scanButtonScanningStarting": "[Your translation here]",
+    "textIfCameraScanSelected": "[Your translation here]",
+    "textIfFileScanSelected": "[Your translation here]",
+    "selectCamera": "[Your translation here]",
+    "fileSelectionChooseImage": "[Your translation here]",
+    "fileSelectionChooseAnother": "[Your translation here]",
+    "fileSelectionNoImageSelected": "[Your translation here]",
+    "anonymousCameraPrefix": "[Your translation here]",
+    "dragAndDropMessage": "[Your translation here]",
+    "dragAndDropMessageOnlyImages": "[Your translation here]",
+    "zoom": "[Your translation here]",
+    "loadingImage": "[Your translation here]",
+    "cameraScanAltText": "[Your translation here]",
+    "fileScanAltText": "[Your translation here]"
+  },
+  "libraryInfo": {
+    "poweredBy": "[Your translation here]",
+    "reportIssues": "[Your translation here]"
+  }
+}

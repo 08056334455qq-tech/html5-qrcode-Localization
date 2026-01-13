@@ -1,0 +1,47 @@
+{
+  "html5Qrcode": {
+    "codeParseError": "QRコードの解析エラー、エラー = {error}",
+    "errorGettingUserMedia": "userMediaの取得エラー、エラー = {error}",
+    "onlyDeviceSupportedError": "このデバイスはnavigator.mediaDevicesをサポートしていません。この場合、サポートされているcameraIdOrConfigはdeviceIdパラメータ（文字列）のみです。",
+    "cameraStreamingNotSupported": "ブラウザがカメラストリーミングをサポートしていません。",
+    "unableToQuerySupportedDevices": "サポートされているデバイスを照会できません、不明なエラー。",
+    "insecureContextCameraQueryError": "カメラアクセスは、httpsまたはlocalhostのような安全なコンテキストでのみサポートされています。",
+    "scannerPaused": "スキャナーが一時停止しました"
+  },
+  "html5QrcodeScanner": {
+    "scanningStatus": "スキャン中",
+    "idleStatus": "待機中",
+    "errorStatus": "エラー",
+    "permissionStatus": "許可",
+    "noCameraFoundErrorStatus": "カメラなし",
+    "lastMatch": "最後のマッチ: {decodedText}",
+    "codeScannerTitle": "コードスキャナー",
+    "cameraPermissionTitle": "カメラの許可をリクエスト",
+    "cameraPermissionRequesting": "カメラの許可をリクエスト中...",
+    "noCameraFound": "カメラが見つかりません",
+    "scanButtonStopScanningText": "スキャンを停止",
+    "scanButtonStartScanningText": "スキャンを開始",
+    "torchOnButton": "ライトをオン",
+    "torchOffButton": "ライトをオフ",
+    "torchOnFailedMessage": "ライトのオンに失敗しました",
+    "torchOffFailedMessage": "ライトのオフに失敗しました",
+    "scanButtonScanningStarting": "カメラを起動中...",
+    "textIfCameraScanSelected": "画像ファイルをスキャン",
+    "textIfFileScanSelected": "カメラを直接使用してスキャン",
+    "selectCamera": "カメラを選択",
+    "fileSelectionChooseImage": "画像を選択",
+    "fileSelectionChooseAnother": "別の画像を選択",
+    "fileSelectionNoImageSelected": "画像が選択されていません",
+    "anonymousCameraPrefix": "匿名カメラ",
+    "dragAndDropMessage": "または画像をドロップしてスキャン",
+    "dragAndDropMessageOnlyImages": "または画像をドロップしてスキャン（その他のファイルはサポートされていません）",
+    "zoom": "ズーム",
+    "loadingImage": "画像を読み込み中...",
+    "cameraScanAltText": "カメラベースのスキャン",
+    "fileScanAltText": "ファイルベースのスキャン"
+  },
+  "libraryInfo": {
+    "poweredBy": "提供: ",
+    "reportIssues": "問題を報告"
+  }
+}

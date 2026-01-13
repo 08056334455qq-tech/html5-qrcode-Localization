@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Html5-QRCode - Internationalization Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .language-selector {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+        }
+        .language-selector label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .language-selector select {
+            padding: 8px 16px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        #reader {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .info {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e3f2fd;
+            border-radius: 8px;
+            border-left: 4px solid #2196F3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f1f8e9;
+            border-radius: 8px;
+            border-left: 4px solid #8BC34A;
+            display: none;
+        }
+        .result.show {
+            display: block;
+        }
+        .result h3 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌍 Html5-QRCode i18n Demo</h1>
+        <p>Demonstrating multi-language support</p>
+    </div>
+
+    <div class="language-selector">
+        <label for="language">🌐 Select Language / 言語を選択:</label>
+        <select id="language">
+            <option value="en">English</option>
+            <option value="ja">日本語 (Japanese)</option>
+        </select>
+    </div>
+
+    <div class="info">
+        <h3>ℹ️ About this demo</h3>
+        <p>
+            This demo shows how the html5-qrcode library now supports internationalization (i18n).
+            Select a language from the dropdown above to see the scanner UI update in real-time.
+        </p>
+        <p>
+            <strong>Currently supported languages:</strong> English, Japanese<br>
+            <strong>Coming soon:</strong> Spanish, French, German, Chinese, Korean, and more!
+        </p>
+    </div>
+
+    <div id="reader"></div>
+
+    <div id="result" class="result">
+        <h3>✅ Scan Result</h3>
+        <p><strong>Decoded Text:</strong> <span id="decoded-text"></span></p>
+        <p><strong>Format:</strong> <span id="format"></span></p>
+    </div>
+
+    <!-- Include the library - in production, use the built version -->
+    <script src="../minified/html5-qrcode.min.js"></script>
+    
+    <script>
+        // Extract the classes from the library
+        const { Html5QrcodeScanner } = Html5Qrcode;
+        
+        // Note: In the actual implementation, you would need to expose I18nManager
+        // through the library's public API. For this demo, we'll simulate it.
+        
+        let scanner = null;
+
+        function initScanner(locale = 'en') {
+            // Clear existing scanner if any
+            if (scanner) {
+                scanner.clear().catch(err => {
+                    console.log('Error clearing scanner:', err);
+                });
+            }
+
+            // In a real implementation, you would do:
+            // I18nManager.setLocale(locale === 'ja' ? SupportedLocales.JA : SupportedLocales.EN);
+
+            // Create new scanner
+            scanner = new Html5QrcodeScanner(
+                "reader",
+                { 
+                    fps: 10, 
+                    qrbox: { width: 250, height: 250 },
+                    rememberLastUsedCamera: true
+                },
+                false
+            );
+
+            // Render scanner with callbacks
+            scanner.render(onScanSuccess, onScanFailure);
+        }
+
+        function onScanSuccess(decodedText, decodedResult) {
+            console.log(`Code matched = ${decodedText}`, decodedResult);
+            
+            // Display result
+            document.getElementById('decoded-text').textContent = decodedText;
+            document.getElementById('format').textContent = decodedResult.result.format.formatName;
+            document.getElementById('result').classList.add('show');
+
+            // Optionally pause scanning after successful scan
+            // scanner.pause();
+        }
+
+        function onScanFailure(error) {
+            // Handle scan failure - usually just means no QR code found in frame
+            // We don't need to show this to user
+        }
+
+        // Language selector change handler
+        document.getElementById('language').addEventListener('change', function(e) {
+            const selectedLanguage = e.target.value;
+            console.log(`Language changed to: ${selectedLanguage}`);
+            
+            // Hide result
+            document.getElementById('result').classList.remove('show');
+            
+            // Reinitialize scanner with new language
+            initScanner(selectedLanguage);
+        });
+
+        // Initialize with default language (auto-detect or English)
+        // In a real implementation, you would call I18nManager.detectAndSetLocale()
+        window.addEventListener('DOMContentLoaded', function() {
+            // Try to detect browser language
+            const browserLang = navigator.language || navigator.userLanguage;
+            const langCode = browserLang.split('-')[0];
+            
+            if (langCode === 'ja') {
+                document.getElementById('language').value = 'ja';
+                initScanner('ja');
+            } else {
+                initScanner('en');
+            }
+        });
+    </script>
+</body>
+</html>

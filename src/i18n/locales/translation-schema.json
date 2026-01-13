@@ -1,0 +1,129 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Html5-QRCode Translation Schema",
+  "description": "JSON Schema for html5-qrcode translation files",
+  "type": "object",
+  "required": ["html5Qrcode", "html5QrcodeScanner", "libraryInfo"],
+  "properties": {
+    "html5Qrcode": {
+      "type": "object",
+      "description": "Translations for Html5Qrcode class",
+      "required": [
+        "codeParseError",
+        "errorGettingUserMedia",
+        "onlyDeviceSupportedError",
+        "cameraStreamingNotSupported",
+        "unableToQuerySupportedDevices",
+        "insecureContextCameraQueryError",
+        "scannerPaused"
+      ],
+      "properties": {
+        "codeParseError": {
+          "type": "string",
+          "description": "Error message when QR code parsing fails. Use {error} as placeholder."
+        },
+        "errorGettingUserMedia": {
+          "type": "string",
+          "description": "Error message when getting user media fails. Use {error} as placeholder."
+        },
+        "onlyDeviceSupportedError": {
+          "type": "string",
+          "description": "Error message when device doesn't support navigator.mediaDevices."
+        },
+        "cameraStreamingNotSupported": {
+          "type": "string",
+          "description": "Error message when camera streaming is not supported."
+        },
+        "unableToQuerySupportedDevices": {
+          "type": "string",
+          "description": "Error message when unable to query supported devices."
+        },
+        "insecureContextCameraQueryError": {
+          "type": "string",
+          "description": "Error message when camera access is attempted in insecure context."
+        },
+        "scannerPaused": {
+          "type": "string",
+          "description": "Message displayed when scanner is paused."
+        }
+      }
+    },
+    "html5QrcodeScanner": {
+      "type": "object",
+      "description": "Translations for Html5QrcodeScanner class",
+      "required": [
+        "scanningStatus",
+        "idleStatus",
+        "errorStatus",
+        "permissionStatus",
+        "noCameraFoundErrorStatus",
+        "lastMatch",
+        "codeScannerTitle",
+        "cameraPermissionTitle",
+        "cameraPermissionRequesting",
+        "noCameraFound",
+        "scanButtonStopScanningText",
+        "scanButtonStartScanningText",
+        "torchOnButton",
+        "torchOffButton",
+        "torchOnFailedMessage",
+        "torchOffFailedMessage",
+        "scanButtonScanningStarting",
+        "textIfCameraScanSelected",
+        "textIfFileScanSelected",
+        "selectCamera",
+        "fileSelectionChooseImage",
+        "fileSelectionChooseAnother",
+        "fileSelectionNoImageSelected",
+        "anonymousCameraPrefix",
+        "dragAndDropMessage",
+        "dragAndDropMessageOnlyImages",
+        "zoom",
+        "loadingImage",
+        "cameraScanAltText",
+        "fileScanAltText"
+      ],
+      "properties": {
+        "scanningStatus": {"type": "string", "description": "Status text when scanning is active"},
+        "idleStatus": {"type": "string", "description": "Status text when scanner is idle"},
+        "errorStatus": {"type": "string", "description": "Status text when there is an error"},
+        "permissionStatus": {"type": "string", "description": "Status text when requesting permissions"},
+        "noCameraFoundErrorStatus": {"type": "string", "description": "Status text when no cameras are found"},
+        "lastMatch": {"type": "string", "description": "Text showing last matched code. Use {decodedText} as placeholder."},
+        "codeScannerTitle": {"type": "string", "description": "Title for the code scanner"},
+        "cameraPermissionTitle": {"type": "string", "description": "Title for camera permission request"},
+        "cameraPermissionRequesting": {"type": "string", "description": "Text shown while requesting camera permissions"},
+        "noCameraFound": {"type": "string", "description": "Message when no camera is found"},
+        "scanButtonStopScanningText": {"type": "string", "description": "Button text to stop scanning"},
+        "scanButtonStartScanningText": {"type": "string", "description": "Button text to start scanning"},
+        "torchOnButton": {"type": "string", "description": "Button text to turn torch on"},
+        "torchOffButton": {"type": "string", "description": "Button text to turn torch off"},
+        "torchOnFailedMessage": {"type": "string", "description": "Error message when torch fails to turn on"},
+        "torchOffFailedMessage": {"type": "string", "description": "Error message when torch fails to turn off"},
+        "scanButtonScanningStarting": {"type": "string", "description": "Text shown when scanner is starting"},
+        "textIfCameraScanSelected": {"type": "string", "description": "Text to switch to file scan mode"},
+        "textIfFileScanSelected": {"type": "string", "description": "Text to switch to camera scan mode"},
+        "selectCamera": {"type": "string", "description": "Label for camera selection dropdown"},
+        "fileSelectionChooseImage": {"type": "string", "description": "Button text to choose an image file"},
+        "fileSelectionChooseAnother": {"type": "string", "description": "Button text to choose another image"},
+        "fileSelectionNoImageSelected": {"type": "string", "description": "Text when no image is selected"},
+        "anonymousCameraPrefix": {"type": "string", "description": "Prefix for anonymous camera names"},
+        "dragAndDropMessage": {"type": "string", "description": "Message for drag and drop functionality"},
+        "dragAndDropMessageOnlyImages": {"type": "string", "description": "Message for drag and drop with file type restriction"},
+        "zoom": {"type": "string", "description": "Label for zoom control"},
+        "loadingImage": {"type": "string", "description": "Message shown while loading an image"},
+        "cameraScanAltText": {"type": "string", "description": "Alt text for camera scan icon"},
+        "fileScanAltText": {"type": "string", "description": "Alt text for file scan icon"}
+      }
+    },
+    "libraryInfo": {
+      "type": "object",
+      "description": "Translations for library information",
+      "required": ["poweredBy", "reportIssues"],
+      "properties": {
+        "poweredBy": {"type": "string", "description": "Text for 'Powered by' attribution"},
+        "reportIssues": {"type": "string", "description": "Text for 'Report issues' link"}
+      }
+    }
+  }
+}

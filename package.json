@@ -45,7 +45,12 @@
     "scanner",
     "barcode",
     "barcode 1d",
-    "barcode 2d"
+    "barcode 2d",
+    "internationalization",
+    "i18n",
+    "localization",
+    "l10n",
+    "multilingual"
   ],
   "author": "minhazav@gmail.com",
   "license": "Apache-2.0",

@@ -30,3 +30,9 @@ export {
     CameraCapabilities,
     CameraDevice
 } from "./camera/core";
+// Export i18n functionality
+export { 
+    I18nManager, 
+    SupportedLocales, 
+    Translations 
+} from "./i18n";
